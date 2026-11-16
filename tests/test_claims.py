@@ -203,6 +203,14 @@ def test_no_planning_words_in_the_readme():
         assert word not in README, word
 
 
+def test_warum_dieses_problem_sentence_has_a_main_verb_and_the_rate_is_scoped():
+    s = README[README.index("## Warum dieses Problem"):README.index("## Modell")]
+    assert "Bei einem Logit auf allen Merkmalen, angepasst auf 500 Containern, liegt der Regret im Mittel" in s
+    assert "Ein Logit auf allen Merkmalen, angepasst" not in README
+    assert "gilt für den Generator dieser Demo" in README                                      # Standgeld-Rate (23,5 %) ohne Zahlenvergleich mit anderen Demos
+    assert "meiner Erinnerung" not in README                                                   # kein Ich-Bezug der Quellenstufe G
+
+
 def test_sources_state_their_level_and_name_the_unread_ones():
     s = README[README.index("## Quellen"):README.index("## Ehrliche Grenzen")]
     for text in ("Elkan", "Van Calster", "Dimitriadis", "Niculescu-Mizil", "Stufe W", "Stufe S", "Stufe G", "nicht nachgelesen", "Guo u. a."):
