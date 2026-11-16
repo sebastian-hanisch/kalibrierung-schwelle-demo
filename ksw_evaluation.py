@@ -237,7 +237,7 @@ def verdict_calibration(label: str, g: dict, gap: float, rank_ece: int, rank_bri
             f"Anteil Standgeld im Training {sci(gap)}. ECE (10 gleich breite Fächer) {de(g['ece10'][0], 3)}, Rang {rank_ece} von {len(M.MODEL_KEYS)} (1 = kleinster); "
             f"Rang nach Brier {rank_brier}; Rang nach Regret bei r = {r} {rank_regret}.")
     if abs(slope - 1.0) <= 0.1 + 1e-9:
-        return "success", text + " Die Steigung liegt bei 1: p̂ stimmt hier als Häufigkeit."
+        return "success", text + " Die Steigung liegt nahe bei 1; der Achsenabschnitt geht in dieses Urteil nicht ein, p̂ stimmt als Häufigkeit nur, wenn er auch nahe 0 liegt."
     direction = "zu extreme" if slope < 1 else "zu flache, zur Mitte gedrückte"
     return "warning", text + f" Die Steigung weicht von 1 ab ({direction} Vorhersagen), obwohl das Mittel im Training stimmen kann."
 

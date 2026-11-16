@@ -8,7 +8,7 @@ Konventionen (stehen auch in der README):
 * Schwelle 1/(1+r); Maßnahme bei p̂ > Schwelle (bei Gleichstand kosten beide Entscheidungen im Erwartungswert dasselbe).
 * Regret = erwartete Kosten bei wahrem p der Regel minus erwartete Kosten der Orakelregel (wahres p, Schwelle 1/(1+r)), je 1000 Entscheidungen; nie negativ.
 * ECE = Σ (Anteil im Fach) · |mittleres p̂ − beobachtete Häufigkeit| im Fach; Fach k = ⌊p̂ · B + 1e-9⌋ (links geschlossen, die Randregel steht im Test in Brüchen).
-* Brier = Mittel von (p̂ − y)²; Murphy-Zerlegung Brier = REL − RES + UNC auf auf zwei Stellen gerundeten Vorhersagen.
+* Brier = Mittel von (p̂ − y)²; Murphy-Zerlegung Brier = REL − RES + UNC auf zwei Stellen gerundeten Vorhersagen.
 * Achsenabschnitt und Steigung = Zwei-Parameter-Anpassung y ~ a + b · logit(p̂) (Platt ohne geglättete Zielwerte)."""
 
 import numpy as np

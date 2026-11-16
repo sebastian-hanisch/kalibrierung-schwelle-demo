@@ -97,7 +97,7 @@ with st.expander("So funktioniert Kalibrierung und Schwelle", expanded=True):
 2. **Das gilt nur für die wahre Wahrscheinlichkeit.** Ein Modell liefert *p̂*. Stimmt *p̂* nicht als Häufigkeit, ist die Kostenschwelle auf *p̂* nicht mehr die beste Regel. Ob *p̂* stimmt, zeigt das
    Zuverlässigkeitsdiagramm (Vorhersage gegen beobachtete Häufigkeit) und die Steigung einer Anpassung y ~ a + b·logit *p̂*; ein Mittel von *p̂* gleich dem Anteil Standgeld zeigt es nicht.
 3. **Rekalibrieren** heißt, auf einer eigenen **Rekalibriermenge** (Container mit bekanntem Ergebnis, nicht die Trainingscontainer) eine Abbildung von *p̂* auf die beobachtete Häufigkeit zu lernen: **Platt** (zwei
-   Parameter, ein Logit auf logit *p̂*) oder **isotonisch** (nichtfallende Stufenfunktion, Pool Adjacent Violators). Das behebt eine verzerrte Skala, nicht eine fehlende Rangfolge, und braucht Daten.
+   Parameter, ein Logit auf logit *p̂*) oder **isotonisch** (nichtfallende Anpassung mit Pool Adjacent Violators, zwischen den Stützstellen linear interpoliert). Das behebt eine verzerrte Skala, nicht eine fehlende Rangfolge, und braucht Daten.
 
 **Konventionen dieser Demo.** r = Kosten verpasst : Kosten unnötig (andere Quellen schreiben das Verhältnis umgekehrt; dann lautet die Schwelle ρ/(1+ρ) mit ρ = 1/r). Maßnahme bei *p̂* > Schwelle.
 **Regret** = erwartete Kosten der Regel bei wahrer Wahrscheinlichkeit minus die der Orakelregel (wahres *p*, Schwelle 1/(1+r)), **je 1000 Entscheidungen**. **ECE** = Σ (Anteil im Fach) · |mittleres *p̂* − beobachtete
@@ -213,7 +213,7 @@ st.markdown(
 )
 _show(E.verdict_hand(hs, n_all))
 with st.expander("Schwelle aus einer allgemeinen Kostenmatrix (a, b, c₀₀, c₁₁)"):
-    st.markdown("Maßnahme bei Container ohne Standgeld kostet *a*, keine Maßnahme bei Standgeld *b*, keine Maßnahme ohne Standgeld *c₀₀*, Maßnahme bei Standgeld *c₁₁*. Die Maßnahme ist besser bei *p* ≥ (a − c₀₀) / ((a − c₀₀) + (b − c₁₁)): "
+    st.markdown("Maßnahme bei Container ohne Standgeld kostet *a*, keine Maßnahme bei Standgeld *b*, keine Maßnahme ohne Standgeld *c₀₀*, Maßnahme bei Standgeld *c₁₁*. Die Maßnahme ist besser bei *p* > (a − c₀₀) / ((a − c₀₀) + (b − c₁₁)) (bei Gleichheit sind beide Entscheidungen gleich teuer): "
                 "nur die Unterschiede je Entscheidung zählen, eine Konstante je wahrer Klasse ändert die Schwelle nicht, eine Konstante je Entscheidung verschiebt sie.")
     mc = st.columns(4)
     ma, mb, mc0, mc1 = (mc[0].number_input("a (Maßnahme ohne Standgeld)", 1, 100, 1, key="mat_a"), mc[1].number_input("b (keine Maßnahme bei Standgeld)", 1, 100, 3, key="mat_b"),
@@ -377,7 +377,7 @@ Rekalibrierung löst $\min \sum_i (y_i - g(\hat p_i))^2$ über nichtfallende $g$
 
 $$\text{ECE} = \sum_{k} \frac{n_k}{n}\,\bigl|\bar f_k - \bar y_k\bigr|.$$
 
-**Brier-Zerlegung** (Murphy) auf auf zwei Stellen gerundeten Vorhersagen:
+**Brier-Zerlegung** (Murphy) auf zwei Stellen gerundeten Vorhersagen:
 
 $$\text{Brier} = \frac{1}{n}\sum_i (\hat p_i - y_i)^2 = \text{REL} - \text{RES} + \text{UNC},$$
 

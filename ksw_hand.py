@@ -110,7 +110,7 @@ def ece(groups, bins: int, left_closed: bool = True) -> Fr:
 
 def threshold_from_matrix(a, b, c00=0, c11=0) -> Fr:
     """Schwelle aus einer 2×2-Kostenmatrix: a = Maßnahme ohne Ereignis, b = keine Maßnahme bei Ereignis, c00 = keine Maßnahme ohne Ereignis, c11 = Maßnahme bei Ereignis.
-    Maßnahme ist besser genau bei p ≥ (a − c00) / ((a − c00) + (b − c11)); nur die Differenzen je Entscheidung zählen."""
+    Maßnahme ist besser bei p > (a − c00) / ((a − c00) + (b − c11)) (bei Gleichheit gleich teuer); nur die Differenzen je Entscheidung zählen."""
     num, den = Fr(a) - Fr(c00), (Fr(a) - Fr(c00)) + (Fr(b) - Fr(c11))
     if num <= 0 or den <= num:
         raise ValueError("Die Matrix braucht a − c00 > 0 und b − c11 > 0.")

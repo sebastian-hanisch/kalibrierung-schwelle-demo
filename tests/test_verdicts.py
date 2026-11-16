@@ -62,6 +62,7 @@ def _gstat(slope=(0.81, 0.10)):
 def test_calibration_verdict_threshold_is_inclusive_at_one_tenth():
     assert E.verdict_calibration("M", _gstat((1.1, 0.1)), 1e-9, 2, 1, 2, 9, 40)[0] == "success"
     assert E.verdict_calibration("M", _gstat((0.9, 0.1)), 1e-9, 2, 1, 2, 9, 40)[0] == "success"
+    assert "Achsenabschnitt" in E.verdict_calibration("M", _gstat((1.0, 0.1)), 1e-9, 2, 1, 2, 9, 40)[1]     # das Urteil nennt, dass der Achsenabschnitt nicht eingeht
     assert E.verdict_calibration("M", _gstat((1.101, 0.1)), 1e-9, 2, 1, 2, 9, 40)[0] == "warning"
     assert E.verdict_calibration("M", _gstat((0.899, 0.1)), 1e-9, 2, 1, 2, 9, 40)[0] == "warning"
 
